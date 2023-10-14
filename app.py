@@ -24,12 +24,15 @@ def remove_channels_without_programs(url):
         if len(programs) == 0:
             root.remove(channel)
     
+    # Create the tree from the modified root
+    tree = ET.ElementTree(root)
     # Save the modified XML file
-    modified_xml_data = ET.tostring(root)
+    # modified_xml_data = ET.tostring(root)
     modified_file_path = 'EPG_modified.xml'
     with open(modified_file_path, 'wb') as file:
-        file.write('<?xml version="1.0" encoding="utf-8" ?><!DOCTYPE tv SYSTEM "xmltv.dtd">\n')
-        file.write(modified_xml_data)
+        header = '<?xml version="1.0" encoding="utf-8" ?><!DOCTYPE tv SYSTEM "xmltv.dtd">\n'
+        file.write(header.encode('utf-8'))
+        tree.write(file, encoding='utf-8', xml_declaration=False)
     return modified_file_path
 
 def download_m3u_file():
