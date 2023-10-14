@@ -1,0 +1,13 @@
+__pycache__/
+.DS_Store
+venv/
+orig/
+upd/
+app_update.py
+checkforworkingstreams.py
+db.py
+dl_db_insert.py
+oldapp.py
+playlist.m3u
+tv.m3u
+updateapi.py
