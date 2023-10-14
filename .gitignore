@@ -11,3 +11,4 @@ oldapp.py
 playlist.m3u
 tv.m3u
 updateapi.py
+urls.py

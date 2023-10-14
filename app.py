@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from flask import Flask, send_file
+from urls import epg_url, m3u_url
 import requests
 
 app = Flask(__name__)
@@ -27,12 +28,12 @@ def remove_channels_without_programs(url):
     modified_xml_data = ET.tostring(root)
     modified_file_path = 'EPG_modified.xml'
     with open(modified_file_path, 'wb') as file:
+        file.write('<?xml version="1.0" encoding="utf-8" ?><!DOCTYPE tv SYSTEM "xmltv.dtd">\n')
         file.write(modified_xml_data)
-    
     return modified_file_path
 
 def download_m3u_file():
-    url = 'http://url.com'
+    url = m3u_url
     filename = 'tv_original.m3u'
     response = requests.get(url)
     with open(filename, 'w') as f:
@@ -40,7 +41,7 @@ def download_m3u_file():
 
 @app.route('/epg')
 def serve_epg():
-    url = 'https://epgurl.com'
+    url = epg_url
     modified_file_path = remove_channels_without_programs(url)
     # Serve the modified EPG file
     return send_file(modified_file_path, as_attachment=True)
